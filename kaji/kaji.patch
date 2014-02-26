@@ -1,0 +1,74 @@
+diff --git a/adagios/apache/adagios.conf b/adagios/apache/adagios.conf
+index 0f63255..843c0c4 100644
+--- a/adagios/apache/adagios.conf
++++ b/adagios/apache/adagios.conf
+@@ -1,7 +1,7 @@
+ 
+ # Create the wsgi process group
+ WSGISocketPrefix run/wsgi
+-WSGIDaemonProcess adagios user=nagios group=nagios processes=1 threads=25
++WSGIDaemonProcess adagios user=shinken group=shinken processes=1 threads=25
+ WSGIScriptAlias /adagios /usr/lib/python2.7/site-packages/adagios/wsgi.py
+ 
+ # Run adagios under /adagios
+@@ -11,9 +11,9 @@ Alias /adagios/media /usr/lib/python2.7/site-packages/adagios/media
+    # Everything under /adagios runs in the above process group
+    WSGIProcessGroup adagios
+ 
+-   AuthName "Nagios Access"
++   AuthName "Adagios for Shinken Access"
+    AuthType Basic
+-   AuthUserFile /etc/nagios/passwd
++   AuthUserFile /etc/shinken/passwd
+    Require valid-user
+    # Redirect /adagios to /adagios/
+    # So path to css/javascript works
+diff --git a/adagios/etc/adagios/adagios.conf b/adagios/etc/adagios/adagios.conf
+index 3d2010f..510ab78 100644
+--- a/adagios/etc/adagios/adagios.conf
++++ b/adagios/etc/adagios/adagios.conf
+@@ -3,18 +3,18 @@
+ # definitions. If set to None, adagios will search most common
+ # paths like /etc/nagios/nagios.cfg for it
+ #nagios_config = "/etc/nagios/nagios.cfg"
+-nagios_config = "/etc/nagios/nagios.cfg"
++nagios_config = "/etc/shinken/shinken.cfg"
+ 
+ # This should be the URL to your nagios server. If set, then
+ # Adagios can link you directly from configuration to live object.
+ # If you don't need this feature. Set nagios_url to '' or None
+ #nagios_url = "http://mynagiosserver/nagios"
+-nagios_url = "/nagios"
++nagios_url = "/shinken"
+ 
+ # destination_directory - Where adagios will store new objects
+ # by default. You should make sure that this directory exists
+ # and nagios.cfg has a cfg_dir=/etc/nagios/adagios/
+-destination_directory = "/etc/nagios/adagios/"
++destination_directory = "/etc/shinken/adagios/"
+ 
+ # enable_githandler - If set to true, and your /etc/nagios/ directory
+ # is a git repository. adagios will automatically commit changes when
+@@ -28,11 +28,11 @@ enable_loghandler = False
+ 
+ # nagios_init_script - Path to init script used to start/stop nagios
+ # Adagios uses this to reload nagios after configuration changes
+-nagios_init_script="sudo /etc/init.d/nagios"
++nagios_init_script="sudo /etc/init.d/shinken"
+ 
+ # nagios_binary - Path to your nagios binary
+ # Adagios uses this to run "nagios -v /etc/nagios/nagios.cfg"
+-nagios_binary="/usr/sbin/nagios"
++nagios_binary="/usr/share/pyshared/shinken/bin/shinken-arbiter"
+ 
+ # escape_html_tags - Escape html tags in status view
+ # If this is enabled, html code in plugin outputs is escaped.
+diff --git a/adagios/etc/sudoers.d/adagios b/adagios/etc/sudoers.d/adagios
+index 42954c4..eeaf164 100644
+--- a/adagios/etc/sudoers.d/adagios
++++ b/adagios/etc/sudoers.d/adagios
+@@ -1,3 +1,3 @@
+ Defaults:nagios    !requiretty
+-nagios             ALL = (root) NOPASSWD: /etc/init.d/nagios
++shinken             ALL = (root) NOPASSWD: /etc/init.d/shinken-arbiter
+ 
