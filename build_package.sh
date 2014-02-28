@@ -14,7 +14,7 @@ cd ..
 tar czf adagios-${version}.tar.gz adagios-${version}
 cd -
 # Prepare source for DEB
-cp -r debian.upstream debian
+cp -r ../../debian .
 sed -i "s/adagios (${version})/adagios (${version}-${release})/g" debian/changelog
 patch -p1 < ../../kaji/kaji.patch
 python setup.py build

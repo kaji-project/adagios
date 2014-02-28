@@ -1,0 +1,35 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --with python2 --buildsystem=python_distutils
+
+
+override_dh_auto_install:
+	python setup.py install --root=debian/adagios --install-layout=deb
+	
+	# Copy apache config to conf.d and modify some paths
+	mkdir -p debian/adagios/etc/apache2/conf.d
+	cat debian/adagios/usr/lib/python*/dist-packages/adagios/apache/adagios.conf | \
+	sed 's|WSGISocketPrefix|#WSGISocketPrefix|' > \
+	debian/adagios/etc/apache2/conf.d/adagios.conf
+	
+	# Copy adagios main config file, and adapt paths to debian specific places
+	mkdir -p debian/adagios/etc/adagios/
+	mkdir -p debian/adagios/etc/shinken/adagios/
+
+	cp -r debian/adagios/usr/lib/python*/dist-packages/adagios/etc/adagios/* debian/adagios/etc/adagios/
+	
+#	sed -i 's|/etc/nagios/|/etc/shinken/|g' debian/adagios/etc/adagios/adagios.conf
+#	sed -i 's|/etc/init.d/nagios|/etc/init.d/nagios3|g' debian/adagios/etc/adagios/adagios.conf
+#	sed -i 's|nagios"|shinken"|g' debian/adagios/etc/adagios/adagios.conf
+#	sed -i 's|destination_directory.*|destination_directory="/etc/nagios3/adagios/"|g' debian/adagios/etc/adagios/adagios.conf
+	sed -i 's|pnp_filepath.*|pnp_filepath="/usr/share/pnp4nagios/html/index.php"|g' debian/adagios/etc/adagios/adagios.conf
+	
+	# copy sudoers.d file and modify paths
+	mkdir -p debian/adagios/etc/sudoers.d
+	cp debian/adagios/usr/lib/python*/dist-packages/adagios/etc/sudoers.d/adagios debian/adagios/etc/sudoers.d/
+#	sed -i 's|/etc/init.d/nagios|/etc/init.d/nagios3|' debian/adagios/etc/sudoers.d/adagios 
+	
+	
+	
+override_dh_auto_build:

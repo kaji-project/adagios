@@ -19,12 +19,12 @@ index 0f63255..843c0c4 100644
 +   AuthName "Adagios for Shinken Access"
     AuthType Basic
 -   AuthUserFile /etc/nagios/passwd
-+   AuthUserFile /etc/shinken/passwd
++   AuthUserFile /etc/shinken/htpasswd.users
     Require valid-user
     # Redirect /adagios to /adagios/
     # So path to css/javascript works
 diff --git a/adagios/etc/adagios/adagios.conf b/adagios/etc/adagios/adagios.conf
-index 3d2010f..510ab78 100644
+index 3d2010f..515e391 100644
 --- a/adagios/etc/adagios/adagios.conf
 +++ b/adagios/etc/adagios/adagios.conf
 @@ -3,18 +3,18 @@
@@ -54,7 +54,7 @@ index 3d2010f..510ab78 100644
  # nagios_init_script - Path to init script used to start/stop nagios
  # Adagios uses this to reload nagios after configuration changes
 -nagios_init_script="sudo /etc/init.d/nagios"
-+nagios_init_script="sudo /etc/init.d/shinken"
++nagios_init_script="sudo /etc/init.d/shinken-arbiter"
  
  # nagios_binary - Path to your nagios binary
  # Adagios uses this to run "nagios -v /etc/nagios/nagios.cfg"
@@ -64,11 +64,25 @@ index 3d2010f..510ab78 100644
  # escape_html_tags - Escape html tags in status view
  # If this is enabled, html code in plugin outputs is escaped.
 diff --git a/adagios/etc/sudoers.d/adagios b/adagios/etc/sudoers.d/adagios
-index 42954c4..eeaf164 100644
+index 42954c4..c4f8a64 100644
 --- a/adagios/etc/sudoers.d/adagios
 +++ b/adagios/etc/sudoers.d/adagios
 @@ -1,3 +1,3 @@
- Defaults:nagios    !requiretty
+-Defaults:nagios    !requiretty
 -nagios             ALL = (root) NOPASSWD: /etc/init.d/nagios
++Defaults:shinken    !requiretty
 +shinken             ALL = (root) NOPASSWD: /etc/init.d/shinken-arbiter
  
+diff --git a/adagios/misc/forms.py b/adagios/misc/forms.py
+index 600949e..a288239 100644
+--- a/adagios/misc/forms.py
++++ b/adagios/misc/forms.py
+@@ -445,7 +445,7 @@ class NagiosServiceForm(forms.Form):
+         nagios_binary = settings.nagios_binary
+         nagios_config = settings.nagios_config
+         if command == "verify":
+-            command = "%s -v '%s'" % (nagios_binary, nagios_config)
++            command = "%s -v -c '%s'" % (nagios_binary, nagios_config)
+         else:
+             command = "%s %s" % (nagios_init, command)
+         code, stdout, stderr = pynag.Utils.runCommand(command)
