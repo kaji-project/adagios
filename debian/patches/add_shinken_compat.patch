@@ -1,28 +1,40 @@
 diff --git a/adagios/apache/adagios.conf b/adagios/apache/adagios.conf
-index 0f63255..843c0c4 100644
+index 0f63255..23cad48 100644
 --- a/adagios/apache/adagios.conf
 +++ b/adagios/apache/adagios.conf
-@@ -1,7 +1,7 @@
+@@ -1,23 +1,22 @@
  
  # Create the wsgi process group
  WSGISocketPrefix run/wsgi
 -WSGIDaemonProcess adagios user=nagios group=nagios processes=1 threads=25
+-WSGIScriptAlias /adagios /usr/lib/python2.7/site-packages/adagios/wsgi.py
 +WSGIDaemonProcess adagios user=shinken group=shinken processes=1 threads=25
- WSGIScriptAlias /adagios /usr/lib/python2.7/site-packages/adagios/wsgi.py
++WSGIScriptAlias / /usr/lib/python2.7/site-packages/adagios/wsgi.py
  
  # Run adagios under /adagios
-@@ -11,9 +11,9 @@ Alias /adagios/media /usr/lib/python2.7/site-packages/adagios/media
+-Alias /adagios/media /usr/lib/python2.7/site-packages/adagios/media
++Alias /media /usr/lib/python2.7/site-packages/adagios/media
+ 
+-<Location /adagios>
++<Location />
     # Everything under /adagios runs in the above process group
     WSGIProcessGroup adagios
  
 -   AuthName "Nagios Access"
-+   AuthName "Adagios for Shinken Access"
++   AuthName "Kaji Access"
     AuthType Basic
 -   AuthUserFile /etc/nagios/passwd
 +   AuthUserFile /etc/shinken/htpasswd.users
     Require valid-user
-    # Redirect /adagios to /adagios/
+-   # Redirect /adagios to /adagios/
++   # Redirect /adagios to /
     # So path to css/javascript works
+-   RedirectMatch ^/adagios$ /adagios/
++   RedirectMatch ^/adagios$ /
++   RedirectMatch ^/adagios/ /
+ </Location>
+-
+-
 diff --git a/adagios/etc/adagios/adagios.conf b/adagios/etc/adagios/adagios.conf
 index 3d2010f..515e391 100644
 --- a/adagios/etc/adagios/adagios.conf
