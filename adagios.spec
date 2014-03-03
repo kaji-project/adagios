@@ -13,7 +13,7 @@ Summary: Web Based Nagios Configuration
 Group: Applications/Internet
 License: GPLv2+
 URL: https://adagios.opensource.is/
-Source0: https://adagios.opensource.is/releases/%{name}-%{version}.tar.gz
+Source0: https://adagios.opensource.is/releases/%{name}_%{version}+kaji.orig.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildArch: noarch
 Prefix: %{_prefix}

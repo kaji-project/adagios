@@ -24,7 +24,7 @@ index 0f63255..23cad48 100644
 +   AuthName "Kaji Access"
     AuthType Basic
 -   AuthUserFile /etc/nagios/passwd
-+   AuthUserFile /etc/shinken/htpasswd.users
++   AuthUserFile /etc/adagios/htpasswd.users
     Require valid-user
 -   # Redirect /adagios to /adagios/
 +   # Redirect /adagios to /

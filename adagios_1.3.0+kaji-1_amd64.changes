@@ -1,0 +1,31 @@
+Format: 1.8
+Date: Sat, 01 Mar 2014 10:33:54 -0500
+Source: adagios
+Binary: adagios
+Architecture: source all
+Version: 1.3.0+kaji-1
+Distribution: unstable
+Urgency: medium
+Maintainer: Pall Sigurdsson <palli@opensource.is>
+Changed-By: Thibault Cohen <thibault.cohen@savoirfairelinux.com>
+Description: 
+ adagios    - Adagios is a web based Nagios configuration interface built to be
+Changes: 
+ adagios (1.3.0+kaji-1) unstable; urgency=medium
+ .
+   * First Kaji version
+Checksums-Sha1: 
+ c6f24bd3fe4d761b5c82c7cff1524077a8b35c2e 867 adagios_1.3.0+kaji-1.dsc
+ 669fd74c5675f81f13a1ea478a87b0b2da91579c 14643872 adagios_1.3.0+kaji.orig.tar.gz
+ cb9b2d3b6becf658080068453d7116c34a5b023b 4236 adagios_1.3.0+kaji-1.debian.tar.xz
+ 0032fc9e595d699e6a766400dd0b99e382d7783f 1920090 adagios_1.3.0+kaji-1_all.deb
+Checksums-Sha256: 
+ 305aab6947bc0088efa6566706519bc93b50a2f7052883e6aa5206239b5faa9a 867 adagios_1.3.0+kaji-1.dsc
+ 93b28d325cf5f7b50ed0f03bd53cebefff01f434c212ca0d79f6748f7ff3beff 14643872 adagios_1.3.0+kaji.orig.tar.gz
+ f8a4d4602434eccae7382e971d91e3ccca590822714dedfe4de50910d280c4f2 4236 adagios_1.3.0+kaji-1.debian.tar.xz
+ 174ae169a2f4520de213ba1f28b883e2d3b8818a6fe6cb3807a5e9d1401b3f59 1920090 adagios_1.3.0+kaji-1_all.deb
+Files: 
+ fb9d385405a44ef3decef67222c71a69 867 python optional adagios_1.3.0+kaji-1.dsc
+ 6d286ba484787b1cb5a81ee9826da315 14643872 python optional adagios_1.3.0+kaji.orig.tar.gz
+ 68ffdb2625712e8e1702f1a838e78f9f 4236 python optional adagios_1.3.0+kaji-1.debian.tar.xz
+ b7244e3adafddd5440e5ffea9169bd09 1920090 python optional adagios_1.3.0+kaji-1_all.deb

@@ -1,0 +1,5 @@
+debian/adagios/usr/lib/python*/dist-packages/adagios/etc/adagios etc/
+debian/adagios/usr/lib/python*/dist-packages/adagios/etc/sudoers.d/adagios etc/sudoers.d/
+debian/etc/adagios/htpasswd.users   etc/adagios/
+debian/etc/adagios/adagios.conf   etc/adagios/
+debian/etc/apache2/conf.d/adagios.conf   etc/apache2/conf.d

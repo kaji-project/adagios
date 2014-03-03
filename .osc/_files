@@ -1,9 +1,8 @@
-<directory name="adagios" rev="1" srcmd5="1b60e94f542ee0eb00e534c5f7658216" vrev="1">
-  <entry md5="4bf10b40bf806b67006f4a9b7bb864b9" mtime="1393374373" name="adagios-1.3.0.tar.gz" size="14439432" />
-  <entry md5="f56c738cdf276f5ba559473bb7ba13a4" mtime="1393374374" name="adagios.spec" size="59340" />
-  <entry md5="f427ad90538e451adb7bf7be33a73f31" mtime="1393374375" name="adagios_1.3.0-1.debian.tar.xz" size="2100" />
-  <entry md5="c874e3a1c0bc87936fb5e4fe17d2c7d0" mtime="1393374375" name="adagios_1.3.0-1.dsc" size="832" />
-  <entry md5="ac3039f74a5f53998558cdc1c2a9a345" mtime="1393374376" name="adagios_1.3.0-1_amd64.changes" size="1483" />
-  <entry md5="e5b846c012446ed3f61ce37110dacf1b" mtime="1393374389" name="adagios_1.3.0.orig.tar.gz" size="14457038" />
-  <entry md5="8e7839f08b2fef17b9717d32c003c1c9" mtime="1393374390" name="build_package.sh" size="898" />
+<directory name="adagios" rev="5" srcmd5="01ec2490f19f3bfddbe630da295e7315" vrev="5">
+  <entry md5="33c3c4a3a55835b3a00175ecca6d31a0" mtime="1393825502" name="adagios.spec" size="59350" />
+  <entry md5="68ffdb2625712e8e1702f1a838e78f9f" mtime="1393825275" name="adagios_1.3.0+kaji-1.debian.tar.xz" size="4236" />
+  <entry md5="fb9d385405a44ef3decef67222c71a69" mtime="1393825276" name="adagios_1.3.0+kaji-1.dsc" size="867" />
+  <entry md5="1b4a55d214358c31d960aa69b83d1e75" mtime="1393825276" name="adagios_1.3.0+kaji-1_amd64.changes" size="1577" />
+  <entry md5="6d286ba484787b1cb5a81ee9826da315" mtime="1393825289" name="adagios_1.3.0+kaji.orig.tar.gz" size="14643872" />
+  <entry md5="3b4e6ea63965a79714c8628680e16bab" mtime="1393825290" name="build_package.sh" size="620" />
 </directory>
