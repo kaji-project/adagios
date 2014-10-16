@@ -1,0 +1,6 @@
+/etc/adagios/
+/etc/shinken/adagios/
+/etc/apache2/conf.d
+/etc/sudoers.d
+/var/lib/adagios
+/var/lib/adagios/userdata
