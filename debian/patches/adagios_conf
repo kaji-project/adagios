@@ -38,7 +38,7 @@ Index: adagios/adagios/etc/adagios/adagios.conf
  # nagios_binary - Path to your nagios binary
  # Adagios uses this to run "nagios -v /etc/nagios/nagios.cfg"
 -nagios_binary="/usr/sbin/nagios"
-+nagios_binary="/usr/share/pyshared/shinken/bin/shinken-arbiter"
++nagios_binary="/usr/bin/shinken-arbiter"
  
  
  # escape_html_tags - Escape html tags in status view
