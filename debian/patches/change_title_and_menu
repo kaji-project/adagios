@@ -7,7 +7,7 @@ Index: adagios/adagios/etc/adagios/adagios.conf
  # You can customize this if you have multiple adagios instances
  # and you want to distinguish the tabs in browser.
 -title_prefix = "Adagios -"
-+title_prefix = "Kaji -"
++title_prefix = "Kaji - "
  
  
  # enable_pnp4nagios - Enable pnp4nagios support (True by default).  
