@@ -1,0 +1,45 @@
+Index: adagios/adagios/etc/adagios/adagios.conf
+===================================================================
+--- adagios.orig/adagios/etc/adagios/adagios.conf
++++ adagios/adagios/etc/adagios/adagios.conf
+@@ -71,7 +71,7 @@ serverside_includes = "/etc/adagios/ssi"
+ # title_prefix - Title of every page is prefixed with this.
+ # You can customize this if you have multiple adagios instances
+ # and you want to distinguish the tabs in browser.
+-title_prefix = "Adagios -"
++title_prefix = "Kaji -"
+ 
+ 
+ # enable_pnp4nagios - Enable pnp4nagios support (True by default).  
+Index: adagios/adagios/settings.py
+===================================================================
+--- adagios.orig/adagios/settings.py
++++ adagios/adagios/settings.py
+@@ -162,7 +162,7 @@ USER_PREFS_PATH = "/var/lib/adagios/user
+ 
+ 
+ # name displayed in the top left corner
+-TOPMENU_HOME = 'Adagios'
++TOPMENU_HOME = 'Kaji'
+ 
+ # items in the top menubar (excluding those coming from %s_menubar.html)
+ # The identfier is used to recognize active links (which are displayed
+@@ -174,7 +174,8 @@ TOPMENU_ITEMS = [
+     # Name,        identifier,      view_url,                                icon
+     # ('Nagvis',  'nagvis',        '/contrib/nagvis.html',                  'glyph-display'),
+     ('Configure', 'objectbrowser', 'objectbrowser.views.list_object_types', 'glyph-edit'),
+-    ('Nagios',    'nagios',        'misc.views.nagios',                     'glyph-list'),
++    ('Nagvis',    'nagvis',        '/nagvis',                               'glyph-globe_af'),
++    ('Grafana',   'grafana',        '/grafana',                             'glyph-stats'),
+ 
+ ]
+ 
+@@ -229,7 +230,7 @@ include = ""
+ django_secret_key="kajiisreallyreallycoolandmegacoolandshinkentoo"
+ map_center = "64.119595,-21.655426"
+ map_zoom = "10"
+-title_prefix = "Adagios - "
++title_prefix = "Kaji - "
+ auto_reload = False
+ refresh_rate = "30"
+ 
