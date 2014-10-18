@@ -42,18 +42,11 @@ Index: adagios/adagios/etc/adagios/adagios.conf
  
  
  # escape_html_tags - Escape html tags in status view
-@@ -94,6 +94,3 @@ graphite_title = "{host} - {service} - {
- 
- # Include configuration options from these config files
- include="/etc/adagios/conf.d/*.conf"
--
--
--
 Index: adagios/adagios/settings.py
 ===================================================================
 --- adagios.orig/adagios/settings.py
 +++ adagios/adagios/settings.py
-@@ -230,7 +230,7 @@ administrators = "nagiosadmin,@users"
+@@ -226,7 +226,7 @@ administrators = "nagiosadmin,@users"
  pnp_url = "/pnp4nagios"
  pnp_filepath = "/usr/share/nagios/html/pnp4nagios/index.php"
  include = ""
