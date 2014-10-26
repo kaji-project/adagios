@@ -1,4 +1,10 @@
-adagios (1.6.99.1-1kaji0.2) unstable; urgency=medium
+adagios (1.6.1-1kaji0.2) unstable; urgency=medium
+
+  * Kaji release
+
+ -- Thibault Cohen <thibault.cohen@savoirfairelinux.com>  Sun, 26 Oct 2014 04:21:26 -0400
+
+adagios (1.6.0.99-1kaji0.2) unstable; urgency=medium
 
   * Kaji release
 
