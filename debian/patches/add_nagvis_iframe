@@ -1,0 +1,87 @@
+Index: adagios/adagios/settings.py
+===================================================================
+--- adagios.orig/adagios/settings.py
++++ adagios/adagios/settings.py
+@@ -174,7 +174,7 @@ TOPMENU_ITEMS = [
+     # Name,        identifier,      view_url,                                icon
+     # ('Nagvis',  'nagvis',        '/contrib/nagvis.html',                  'glyph-display'),
+     ('Configure', 'objectbrowser', 'objectbrowser.views.list_object_types', 'glyph-edit'),
+-    ('Nagvis',    'nagvis',        '/nagvis',                  'glyph-globe'),
++    ('Nagvis',    'nagvis',        '/contrib/nagvis.html',                  'glyph-globe'),
+     ('Grafana',   'grafana',       '/grafana',                              'glyph-stats'),
+ 
+ ]
+Index: adagios/kaji_contrib/nagvis.html
+===================================================================
+--- /dev/null
++++ adagios/kaji_contrib/nagvis.html
+@@ -0,0 +1,69 @@
++<!DOCTYPE html>
++{% load url from future %}
++{% load ssi from future %}
++{% load static %}
++{% load i18n %}
++
++<html lang="en">
++<head>
++    <meta charset="utf-8">
++    <title>{{ settings.title_prefix  }}{% block title %}Nagvis{% endblock %}</title>
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
++    <meta name="description" content="Adagios - Nagios Configuration Made Easy">
++    <meta name="author" content="Tomas Edwardsson, Pall Sigurdsson">
++    <meta http-equiv="X-UA-Compatible" content="IE=9">
++    <link href="{% url "media" path=user_data.theme_path %}" rel="stylesheet">
++    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
++    <!--[if lt IE 9]>
++      <script src="{% url "media" path="html5shim/html5.js" %}"></script>
++    <![endif]-->
++    <!-- fav and touch icons -->
++    <link rel="shortcut icon" href="{% url "media" path="img/favicon.ico" %}">
++    <link rel="apple-touch-icon-precomposed" sizes="114x114"
++          href="{% url "media" path="ico/apple-touch-icon-114-precomposed.png" %}">
++    <link rel="apple-touch-icon-precomposed" sizes="72x72"
++          href="{% url "media" path="ico/apple-touch-icon-72-precomposed.png" %}">
++    <link rel="apple-touch-icon-precomposed"
++          href="{% url "media" path="ico/apple-touch-icon-57-precomposed.png" %}">
++    <script src="{% url "media" path="external/jquery/jquery-1.9.1.min.js" %}"></script>
++    <!-- Block header starts -->
++    {%  block header %}{% endblock %}
++    <!-- Block header ends -->
++    <script>
++        var BASE_URL = "{% url "home" %}";
++    </script>
++    <script type="text/javascript" src="{% url "django.views.i18n.javascript_catalog" %}"></script>
++</head>
++<body>
++
++<!-- begin serverside includes -->
++{% for ssi_header in ssi_headers %}
++    <!-- including content from {{ ssi_header }} -->
++    {% ssi ssi_header parsed %}
++    <!-- end of file {{ ssi_header }} -->
++{% endfor %}
++<!-- end of serverside includes -->
++
++<!-- block top_navigation starts -->
++{% block top_navigation %}
++    {%  include "snippets/top_navigation_bar.html" %}
++{% endblock %}
++
++<script loanguage="javascript" type="text/javascript">
++function updateIFrameSize()
++{
++    width = $(window).width();
++    height = $(window).height() - 50;
++    $("iframe#frmnagvis").css('width', width + 'px');
++    $("iframe#frmnagvis").css('height', height + 'px');
++    new_height = $(window).height() - 100;
++    $("iframe#frmnagvis").contents().find('div#sidebar').css('min-height', new_height + 'px');
++    $("iframe#frmnagvis").contents().find('div#sidebar').css('height', new_height + 'px');
++    $("iframe#frmnagvis").contents().find('div#sidebar').css('max-height', new_height + 'px');
++    nwidth = $(window).width() - 220;
++    $("iframe#frmnagvis").contents().find('div#overview').width(nwidth + 'px');
++}
++setInterval(updateIFrameSize,500);
++
++</script>
++<iframe src="/nagvis" frameborder="0" scrolling="auto" width="100%" style="min-height: 500px;" id="frmnagvis" ></iframe>

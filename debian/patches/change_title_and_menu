@@ -29,8 +29,8 @@ Index: adagios/adagios/settings.py
      # ('Nagvis',  'nagvis',        '/contrib/nagvis.html',                  'glyph-display'),
      ('Configure', 'objectbrowser', 'objectbrowser.views.list_object_types', 'glyph-edit'),
 -    ('Nagios',    'nagios',        'misc.views.nagios',                     'glyph-list'),
-+    ('Nagvis',    'nagvis',        '/nagvis',                               'glyph-globe'),
-+    ('Grafana',   'grafana',        '/grafana',                             'glyph-stats'),
++    ('Nagvis',    'nagvis',        '/nagvis',                  'glyph-globe'),
++    ('Grafana',   'grafana',       '/grafana',                              'glyph-stats'),
  
  ]
  
