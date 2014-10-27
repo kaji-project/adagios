@@ -1,3 +1,4 @@
 debian/adagios/usr/lib/python*/dist-packages/adagios/etc/adagios etc/
 debian/adagios/usr/lib/python*/dist-packages/adagios/etc/sudoers.d/adagios etc/sudoers.d/
 debian/adagios/usr/lib/python*/dist-packages/adagios/apache/adagios.conf etc/apache2/sites-available/
+kaji_contrib/* var/lib/adagios/contrib/
