@@ -24,7 +24,7 @@ Index: adagios/adagios/etc/adagios/adagios.conf
  
  # livestatus_path - Path to livestatus socket
 -livestatus_path = None
-+livestatus_path = "127.0.0.1:50000"
++livestatus_path = "localhost:50000"
  # enable_githandler - If set to true, and your /etc/nagios/ directory
  # is a git repository. adagios will automatically commit changes when
  # they are made.
