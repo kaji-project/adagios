@@ -9,7 +9,7 @@ Index: adagios/adagios/apache/adagios.conf
 -WSGIDaemonProcess adagios user=nagios group=nagios processes=1 threads=25
 -WSGIScriptAlias /adagios /usr/lib/python2.7/site-packages/adagios/wsgi.py
 +#WSGISocketPrefix run/wsgi
-+WSGIDaemonProcess adagios user=www-data group=www-data processes=1 threads=25
++WSGIDaemonProcess adagios user=shinken group=shinken processes=1 threads=25
 +WSGIScriptAlias / /usr/lib/python2.7/dist-packages/adagios/wsgi.py
  
  # Run adagios under /adagios
