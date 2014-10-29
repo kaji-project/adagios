@@ -2,7 +2,7 @@ Index: adagios/adagios/apache/adagios.conf
 ===================================================================
 --- adagios.orig/adagios/apache/adagios.conf
 +++ adagios/adagios/apache/adagios.conf
-@@ -1,23 +1,23 @@
+@@ -1,23 +1,30 @@
  
  # Create the wsgi process group
 -WSGISocketPrefix run/wsgi
@@ -11,6 +11,13 @@ Index: adagios/adagios/apache/adagios.conf
 +#WSGISocketPrefix run/wsgi
 +WSGIDaemonProcess adagios user=shinken group=shinken processes=1 threads=25
 +WSGIScriptAlias / /usr/lib/python2.7/dist-packages/adagios/wsgi.py
++
++# Set favicon
++<Location "/favicon.ico">
++    SetHandler none
++</Location>
++Alias /favicon.ico /var/www/html/kaji-fav.ico
++Alias /media/img/favicon.ico /var/www/html/kaji-fav.ico
  
  # Run adagios under /adagios
 -Alias /adagios/media /usr/lib/python2.7/site-packages/adagios/media
