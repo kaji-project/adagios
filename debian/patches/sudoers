@@ -6,5 +6,5 @@ Index: adagios/adagios/etc/sudoers.d/adagios
 -Defaults:nagios    !requiretty
 -nagios             ALL = (root) NOPASSWD: /etc/init.d/nagios
 -
-+Defaults:www-data    !requiretty
-+www-data             ALL = (root) NOPASSWD: /etc/init.d/shinken-arbiter
++Defaults:shinken    !requiretty
++shinken             ALL = (root) NOPASSWD: /etc/init.d/shinken-arbiter
