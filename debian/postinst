@@ -1,5 +1,3 @@
-chown -R www-data:www-data /etc/adagios/ /var/lib/adagios
-usermod -G nagios www-data
-chmod -R g+rw /etc/adagios/ /var/lib/adagios
+chown -R shinken: /etc/adagios/ /var/lib/adagios
 a2ensite adagios
 service apache2 reload || echo "Failed to reload apache. You have to reload apache to update its configuration"
