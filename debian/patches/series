@@ -5,3 +5,4 @@ apache_conf
 change_title_and_menu
 add_nagvis_iframe
 add_grafana_iframe
+rekishi_integration
