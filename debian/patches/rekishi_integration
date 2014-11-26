@@ -44,8 +44,8 @@ Index: adagios/adagios/etc/adagios/conf.d/rekishi.conf
 +    # Connection info for InfluxDB
 +    INFLUXDB_HOST = os.getenv('INFLUXDB_HOST', '127.0.0.1')
 +    INFLUXDB_PORT = os.getenv('INFLUXDB_PORT', 8086)
-+    INFLUXDB_USER = os.getenv('INFLUXDB_USER', 'shinken')
-+    INFLUXDB_PASSWORD = os.getenv('INFLUXDB_PASSWORD', 'shinken')
++    INFLUXDB_USER = os.getenv('INFLUXDB_USER', 'kaji')
++    INFLUXDB_PASSWORD = os.getenv('INFLUXDB_PASSWORD', 'kaji')
 +    INFLUXDB_DB = os.getenv('INFLUXDB_DB', 'shinken')
 Index: adagios/adagios/media/external/dygraphs/dygraph-combined.js
 ===================================================================
