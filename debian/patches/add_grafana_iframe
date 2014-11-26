@@ -26,7 +26,7 @@ Index: adagios/kaji_contrib/grafana.html
 +<html lang="en">
 +<head>
 +    <meta charset="utf-8">
-+    <title>{{ settings.title_prefix  }}{% block title %}Nagvis{% endblock %}</title>
++    <title>{{ settings.title_prefix  }}{% block title %}Grafana{% endblock %}</title>
 +    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 +    <meta name="description" content="Adagios - Nagios Configuration Made Easy">
 +    <meta name="author" content="Tomas Edwardsson, Pall Sigurdsson">
