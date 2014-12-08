@@ -747,8 +747,8 @@ Index: adagios/adagios/status/templates/status_detail.html
 +                          );
 +                          allDygraphs.push(dg);
 +                        }
++                    $("a#pre_" + jQuerySelectorEscape('{{ k }}')).popover('show').popover('hide')
 +                    });
-+                $("a#pre_" + jQuerySelectorEscape('{{ k }}')).popover('show').popover('hide')
 +                {% endfor %}
 +            {% endfor %}
 +            }
