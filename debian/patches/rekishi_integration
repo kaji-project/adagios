@@ -72,17 +72,17 @@ Index: adagios/adagios/settings.py
 +# the CSS identifier only needs to be unique here (it will be prefixed)
 +REKISHI_PERIODS = [
 +    # Displayed name, CSS identifier, rekishi period
-+    ('4 hours',       'hours',        '-4h'),
-+    ('One day',       'day',          '-1d'),
-+    ('One week',      'week',         '-1w'),
-+    ('30 days',       'month',        '-30d'),
++    ('15 minutes',  'quarter',      '-15m'),
++    ('1 hour',      'hour',         '-1h'),
++    ('12 hours',    'halfday',      '-12h'),
++    ('2 days',      'days',         '-2d'),
 +    ]
 +
 +# Title format to use on all rekishi graphs
 +rekishi_title = "{host} - {service} - {metric}"
 +
 +# default selected (active) tab, and the one rendered in General-preview
-+REKISHI_DEFAULT_TAB = 'day'
++REKISHI_DEFAULT_TAB = 'halfday'
 +
  # Adagios specific configuration options. These are just the defaults,
  # Anything put in /etc/adagios.d/adagios.conf will overwrite this.
@@ -484,7 +484,7 @@ Index: adagios/adagios/status/templates/status_detail.html
                                  </tr>
                                  {% for i in perfdata %}
                                      <tr>
-@@ -138,11 +147,25 @@
+@@ -138,11 +147,27 @@
                                          <td>{{ i.max }}   </td>
                                          {% if settings.enable_pnp4nagios %}
                                          <td>
@@ -505,14 +505,16 @@ Index: adagios/adagios/status/templates/status_detail.html
 +                                                <a href="#" graph="{{ i.label }}" id="pre_{{ i.label }}" class="preview rekishi" title="{{ service_description }} {{ i.label }}">
 +                                                    <i class="glyph glyph-charts" id="rekishi-preview-{{ i.label }}"></i>
 +                                                </a>
-+                                                <div id="rekishi-pre_graph-container_{{ i.label }}">
-+                                                    <div id="pre_graph_{{ i.label }}" style="max-height: 200px; max-width: 480px;" ></div>
++                                                <div id="rekishi-pre_graph-container_{{ i.label }}" style="" >
++                                                    <div id="pre_graph_{{ i.label }}" style="max-height: 200px; max-width: 480px;" >
++                                                      <img src="/media/external/select2/spinner.gif" />
++                                                    </div>
 +                                                </div>
 +                                            </td>
                                          {% endif %}
                                      </tr>
                                  {% endfor %}
-@@ -545,6 +568,40 @@
+@@ -545,6 +570,42 @@
          </div>
          {% endif %}
          
@@ -527,17 +529,19 @@ Index: adagios/adagios/status/templates/status_detail.html
 +                    <li{% if period.css_id == settings.REKISHI_DEFAULT_TAB %} class="active"{% endif %}><a href="#" id="rekishi_{{ period.css_id }}" range="{{ period.period_sec }}">{% trans period.name %}</a>
 +                  {% endfor %}
 +                </ul>
-+                <input type="checkbox" id="rekishiEvents"> {% trans "Show events" %}</input>
++                <!--<input type="checkbox" id="rekishiEvents"> {% trans "Show events" %}</input>-->
 +              </div>
 +            </div>
 +
 +              {% for graph in rekishi.graphs %}
 +                <div class="tab-pane{% if graph.css_id == settings.REKISHI_DEFAULT_TAB %} active{% endif %}" id="rekishi_{{ graph.css_id }}">
-+                  {% for k,v in graph.items %}
++                  {% for k in metrics %}
 +                <hr/>
 +                  <div class="row">
 +                    <div class="rekishi-graph-container span9" style="position: relative; height: 320px;">
-+                      <div id="graph_{{ k }}" style="position: absolute; left: 10px; right: 10px; top: 40px; bottom: 10px;"></div>
++                      <div id="graph_{{ k }}" style="position: absolute; left: 10px; right: 10px; top: 40px; bottom: 10px;">
++                          <div style="margin-left:50px;"> Loading... <img src="/media/external/select2/spinner.gif" /></div>
++                      </div>
 +                    </div>
 +                    <div class="span3">
 +                    <div id="{{ k }}_legend"></div>
@@ -553,7 +557,7 @@ Index: adagios/adagios/status/templates/status_detail.html
          </div>
        </div>
  
-@@ -699,7 +756,6 @@
+@@ -699,7 +760,6 @@
                      })
                      .fail( function(data) {
                          $('#effective_check_command').text(gettext("Failed to load check_command."));
@@ -561,7 +565,7 @@ Index: adagios/adagios/status/templates/status_detail.html
                      });
  
              {% if not settings.escape_html_tags %}
-@@ -804,7 +860,16 @@
+@@ -804,7 +864,16 @@
          });
  
          // Perfomance Graph Preview on hover
@@ -579,7 +583,7 @@ Index: adagios/adagios/status/templates/status_detail.html
              placement: 'top',
              trigger: 'hover',
              template: '<div class="popover"><div class="arrow"></div><div class="popover-inner" style="width: 600px"><h3 class="popover-title"></h3><div class="popover-content" style="min-height: 200px"><p></p></div></div></div>',
-@@ -812,6 +877,287 @@
+@@ -812,6 +881,307 @@
                  return "<img src='"+ $(this)[0].href +"' alt='{% trans "Image preview" %}' />";
              }
          });
@@ -613,34 +617,47 @@ Index: adagios/adagios/status/templates/status_detail.html
 +                var now = new Date().getTime();
 +                var time_range = [now + parseInt($("ul#rekishi_ul > li.active > a").attr("range")) * 1000, now];
 +
++
++            metrics = new Array();
++            {% for i in metrics %}
++                metrics.push("{{i}}")
++            {% endfor %}
 +            {% for graph in rekishi.graphs %}
 +                {% for k,v in graph.items %}
-+                    $.get("{{ v }}", function(data){
++                    $.get("{{ v }}", function(datas){
++                      $.each(datas, function(index, data){
++                        label = ""
++
++                        $.each(metrics, function(index, metric_name) {
++                            if ( data.name.split(">").slice(-1)[0] == metric_name ) {
++                                label = metric_name
++                            }
++                        })
 +
 +                        {# Find the units in the returned data so we can use them in axis title #}
 +                        var unitsIndex = 0;
-+                        for(var i=0; i<data[0].labels.length; i++){
-+                            if(data[0].labels[i] == "unit"){
++                        for(var i=0; i<data.labels.length; i++){
++                            if(data.labels[i] == "unit"){
 +                                unitsIndex = i;
 +                            }
 +                        }
 +
 +                        {# Fix the timestamps to JS dates #}
-+                        for(var i=0; i<data[0].data.length; i++){
-+                            data[0].data[i][0] = new Date(parseInt(data[0].data[i][0]) * 1000);
++                        for(var i=0; i<data.data.length; i++){
++                            data.data[i][0] = new Date(parseInt(data.data[i][0]) * 1000);
 +                        }
 +
 +                        // Get indexes of datas
-+                        var critical_i = data[0].labels.indexOf("critical");
-+                        var warning_i = data[0].labels.indexOf("warning");
-+                        var min_i = data[0].labels.indexOf("min");
-+                        var max_i = data[0].labels.indexOf("max");
-+                        var value_i = data[0].labels.indexOf("value");
-+                        var time_i = data[0].labels.indexOf("time");
-+                        var unit_i = data[0].labels.indexOf("unit");
++                        var critical_i = data.labels.indexOf("critical");
++                        var warning_i = data.labels.indexOf("warning");
++                        var min_i = data.labels.indexOf("min");
++                        var max_i = data.labels.indexOf("max");
++                        var value_i = data.labels.indexOf("value");
++                        var time_i = data.labels.indexOf("time");
++                        var unit_i = data.labels.indexOf("unit");
 +                        // Set datas
 +                        graph_data = new Array();
-+                        $(data[0].data).each( function() {
++                        $(data.data).each( function() {
 +                            d = new Array();
 +                            d[0] = $(this)[time_i];
 +                            d[1] = $(this)[value_i];
@@ -651,19 +668,19 @@ Index: adagios/adagios/status/templates/status_detail.html
 +                        // Set graph labels
 +                        graph_labels = new Array();
 +                        graph_labels[0] = "time";
-+                        graph_labels[1] = "{{ k }}";
++                        graph_labels[1] = label;
 +                        graph_labels[2] = "warning";
 +                        graph_labels[3] = "critical";
 +                        // Set title
-+                        var title = "{{ k }}";
-+                        var unit = data[0].data[0][unit_i];
++                        var title = label;
++                        var unit = data.data[0][unit_i];
 +                        if ( unit ) {
 +                            title = title + " (" + unit + ")";
 +                        }
 +                        // set min and max
 +                        var max = 0;
 +                        var min = 0;
-+                        $(data[0].data).each( function() {
++                        $(data.data).each( function() {
 +                            if ( min > $(this)[min_i] ){
 +                                min = $(this)[min_i]
 +                            }
@@ -691,18 +708,18 @@ Index: adagios/adagios/status/templates/status_detail.html
 +                        });
 +                        // Build pre_graph
 +                        pre_dg = new Dygraph(
-+                            $("#pre_graph_"  + jQuerySelectorEscape('{{ k }}'))[0],
++                            $("#pre_graph_"  + jQuerySelectorEscape(label))[0],
 +                            graph_data,
 +                            {
 +                                labels: graph_labels,
 +                                title: title,
 +                                colors: ['#489CDF', '#FFDE00', 'red'],
 +                                strokeWidth: 2,
-+                                "{{ k }}": {fillGraph: true},
++                                label: {fillGraph: true},
 +                                labelsKMG2: true,
 +                                legend: 'never',
 +                                showLabelsOnHighlight: false,
-+                                ylabel: data[0].data[0][unitsIndex],
++                                ylabel: data.data[0][unitsIndex],
 +//                                valueRange: [min, max],
 +//                                yRangePad: 20,
 +                                dateWindow: time_range
@@ -711,7 +728,7 @@ Index: adagios/adagios/status/templates/status_detail.html
 +                        // Build graph
 +                        if ($("li#rekishi_tab").hasClass("active")) {
 +                          dg = new Dygraph(
-+                            $("#graph_" + jQuerySelectorEscape('{{ k }}'))[0],
++                            $("#graph_" + jQuerySelectorEscape(label))[0],
 +                            graph_data,
 +                            { 
 +                                labels: graph_labels,
@@ -719,18 +736,18 @@ Index: adagios/adagios/status/templates/status_detail.html
 +                                title: title,
 +                                colors: ['#489CDF', '#FFDE00', 'red'],
 +                                strokeWidth: 2,
-+                                "{{ k }}": {fillGraph: true},
++                                label: {fillGraph: true},
 +                                labelsKMG2: true,
 +                                labelsSeparateLines: true,
 +                                legend: 'always',
 +                                highlightCircleSize: 5,
 +                                //drawPoints: true,
-+                                labelsDiv: document.getElementById('{{ k }}_legend'),
++                                labelsDiv: document.getElementById(label +'_legend'),
 +//                                showRangeSelector: true,
 +//                                rangeSelectorHeight: 30,
 +//                                rangeSelectorPlotStrokeColor: '#808FAB',
 +//                                rangeSelectorPlotFillColor: '#A7B1C4',
-+                                ylabel: data[0].data[0][unitsIndex],
++                                ylabel: data.data[0][unitsIndex],
 +                                dateWindow: time_range,
 +                                valueRange: [min, max],
 +                                yRangePad: 20,
@@ -752,22 +769,28 @@ Index: adagios/adagios/status/templates/status_detail.html
 +                          );
 +                          allDygraphs.push(dg);
 +                        }
-+                    $("a#pre_" + jQuerySelectorEscape('{{ k }}')).popover('show').popover('hide')
++                        $("a#pre_" + jQuerySelectorEscape(label)).popover('show').popover('hide')
++                      });
 +                    });
++
++
++
++
 +                {% endfor %}
 +            {% endfor %}
 +            }
 +
-+           {% for graph in rekishi.graphs %}
-+              {% for k,v in graph.items %}
-+                $("a#pre_" + jQuerySelectorEscape('{{ k }}')).popover({
-+                    placement: 'top',
-+                    trigger: 'hover',
-+                    template: '<div class="popover"><div class="arrow"></div><div class="popover-inner" style="width: 530px"><h3 class="popover-title"></h3><div class="popover-content" style="min-height: 200px"><p></p></div></div></div>',
-+                    content: $("#rekishi-pre_graph-container_" + jQuerySelectorEscape('{{ k }}'))
-+                });
-+              {% endfor %}
++
++            {% for metric in metrics %}
++            $("a#pre_" + jQuerySelectorEscape('{{ metric }}')).popover({
++                            placement: 'top',
++                            trigger: 'click',
++                            template: '<div class="popover"><div class="arrow"></div><div class="popover-inner" style="width: 530px"><h3 class="popover-title"></h3><div class="popover-content" style="min-height: 200px"><p></p></div></div></div>',
++                            content: $("#rekishi-pre_graph-container_" + jQuerySelectorEscape('{{ metric }}'))
++                        });
 +            {% endfor %}
++
++
 +
 +
 +            $("input#rekishiEvents").change( function() {
@@ -812,6 +835,7 @@ Index: adagios/adagios/status/templates/status_detail.html
 +                    });
 +                }
 +            });
++
 +
 +            var desired_range = null;
 +            function approach_range() {
@@ -933,23 +957,30 @@ Index: adagios/adagios/status/views.py
  
      # If hostgroup_name was specified, lets get all log entries that belong to that hostgroup
      if host_name and service_description:
-@@ -351,6 +361,15 @@ def service_detail(request, host_name, s
+@@ -351,6 +361,22 @@ def service_detail(request, host_name, s
                  for k,v in graph['metrics'].items():
                      default[k] = v
                  c['graphite_default'] = default
 +
 +    if adagios.settings.enable_rekishi:
 +        metrics = [x.label for x in perfdata.metrics]
++#        c['rekishi'] = rekishi.get(adagios.settings.rekishi_url,
++#                                   c['host_name'],
++#                                   c['service_description'],
++#                                   metrics,
++#                                   adagios.settings.REKISHI_PERIODS,
++#                                   )
 +        c['rekishi'] = rekishi.get(adagios.settings.rekishi_url,
 +                                   c['host_name'],
 +                                   c['service_description'],
-+                                   metrics,
++                                   [""],
 +                                   adagios.settings.REKISHI_PERIODS,
 +                                   )
++        c['metrics'] = metrics
      
      return render_to_response('status_detail.html', c, context_instance=RequestContext(request))
  
-@@ -810,56 +829,65 @@ def state_history(request):
+@@ -810,56 +836,65 @@ def state_history(request):
          start_time = end_time - seconds_today
      start_time = int(start_time)
  
@@ -1046,7 +1077,7 @@ Index: adagios/adagios/status/views.py
                  last_item['duration_percent'] = 100 * float(
                      duration) / total_duration
                  service['duration'] += last_item['duration_percent']
-@@ -867,11 +895,11 @@ def state_history(request):
+@@ -867,11 +902,11 @@ def state_history(request):
                      service['sla'] += last_item['duration_percent']
                  else:
                      service['num_problems'] += 1
@@ -1061,7 +1092,7 @@ Index: adagios/adagios/status/views.py
              last_item['duration_percent'] = 100 * duration / total_duration
              service['duration'] += last_item['duration_percent']
              if last_item['state'] == 0:
-@@ -891,8 +919,8 @@ def _status_log(request):
+@@ -891,8 +926,8 @@ def _status_log(request):
      c['errors'] = []
      start_time = request.GET.get('start_time', '')
      end_time = request.GET.get('end_time', '')
@@ -1072,7 +1103,7 @@ Index: adagios/adagios/status/views.py
      limit = request.GET.get('limit', '')
  
      if end_time == '':
-@@ -928,16 +956,29 @@ def _status_log(request):
+@@ -928,16 +963,29 @@ def _status_log(request):
          k = str(k)
          v = str(v)
          kwargs[k] = v
