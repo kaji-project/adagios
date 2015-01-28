@@ -67,10 +67,14 @@ install %{buildroot}%{python_sitelib}/adagios/etc/adagios/conf.d/okconfig.conf %
 mkdir -p %{buildroot}%{_sysconfdir}/sudoers.d/
 install %{buildroot}%{python_sitelib}/adagios/etc/sudoers.d/adagios %{buildroot}%{_sysconfdir}/sudoers.d/
 
-mkdir -p "%{buildroot}%{_localstatedir}/lib/adagios/"
-mkdir -p "%{buildroot}%{_localstatedir}/lib/adagios/userdata"
-cp -r %{buildroot}/kaji_contrib/* "%{buildroot}%{_localstatedir}/lib/adagios/contrib"
-cp -r "%{buildroot}%{python_sitelib}/adagios/contrib/lib"  "%{buildroot}%{_localstatedir}/lib/adagios/contrib"
+mkdir -p "%{buildroot}%{_var}/lib/adagios/"
+mkdir -p "%{buildroot}%{_var}/lib/adagios/userdata"
+install -d -m0755 %{buildroot}%{_var}/lib/adagios/contrib
+cp -r kaji_contrib/* "%{buildroot}%{_var}/lib/adagios/contrib"
+pwd
+ls
+ls kaji_contrib
+cp -r "%{buildroot}%{python_sitelib}/adagios/contrib/lib"  "%{buildroot}%{_var}/lib/adagios/contrib"
 mkdir -p "%{buildroot}%{_sysconfdir}/shinken/adagios"
 
 %clean
@@ -84,8 +88,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0644, root, root) %config(noreplace) %{_sysconfdir}/httpd/conf.d/adagios.conf
 %attr(0775, shinken, shinken) %dir %{_sysconfdir}/adagios
 %attr(0775, shinken, shinken) %dir %{_sysconfdir}/adagios/conf.d
-%attr(0775, shinken, shinken) %dir %{_localstatedir}/lib/adagios
-%attr(0775, shinken, shinken) %dir %{_localstatedir}/lib/adagios/userdata
+%attr(0775, shinken, shinken) %dir %{_var}/lib/adagios
+%attr(0775, shinken, shinken) %dir %{_var}/lib/adagios/userdata
 %attr(0664, shinken, shinken) %config(noreplace) %{_sysconfdir}/adagios/adagios.conf
 %attr(0664, shinken, shinken) %config(noreplace) %{_sysconfdir}/adagios/conf.d/*
 %attr(0775, shinken, shinken) %dir %{_sysconfdir}/shinken/adagios
