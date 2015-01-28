@@ -1,8 +1,9 @@
 adagios (1.6.1-2kaji0.2) unstable; urgency=medium
 
+  * Kaji release
   * Fix top alert producer
 
- -- Thibault Cohen <thibault.cohen@savoirfairelinux.com>  Mon, 19 Jan 2015 14:17:41 -0500
+ -- Thibault Cohen <thibault.cohen@savoirfairelinux.com>  Sun, 25 Jan 2015 19:28:48 -0500
 
 adagios (1.6.1-1kaji0.2) unstable; urgency=medium
 
