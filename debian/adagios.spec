@@ -71,9 +71,6 @@ mkdir -p "%{buildroot}%{_var}/lib/adagios/"
 mkdir -p "%{buildroot}%{_var}/lib/adagios/userdata"
 install -d -m0755 %{buildroot}%{_var}/lib/adagios/contrib
 cp -r kaji_contrib/* "%{buildroot}%{_var}/lib/adagios/contrib"
-pwd
-ls
-ls kaji_contrib
 cp -r "%{buildroot}%{python_sitelib}/adagios/contrib/lib"  "%{buildroot}%{_var}/lib/adagios/contrib"
 mkdir -p "%{buildroot}%{_sysconfdir}/shinken/adagios"
 
