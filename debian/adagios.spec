@@ -14,7 +14,6 @@ Group: Applications/Internet
 License: AGPLv3
 URL: https://adagios.opensource.is/
 Source0: https://pypi.python.org/packages/source/a/adagios/%{name}_%{version}.orig.tar.gz
-Source1: %{name}_%{version}-%{release}.debian.tar.xz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildArch: noarch
 Prefix: %{_prefix}
@@ -45,10 +44,7 @@ Adagios is a web based Nagios configuration interface build to be simple and int
 VERSION=%{version}
 echo %{release} | grep -q git && VERSION=$VERSION-%{release}
 sed -i "s/^__version__.*/__version__ = '$VERSION'/" adagios/__init__.py
-# Untar debian tarball
-tar vxf %{SOURCE1}
 # Apply all patches
-ls .
 for patch_file in $(cat debian/patches/series | grep -v "^#")
 do
 %{__patch} -p1 < debian/patches/$patch_file
