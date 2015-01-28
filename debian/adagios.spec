@@ -63,6 +63,7 @@ install %{buildroot}%{python_sitelib}/adagios/apache/adagios.conf %{buildroot}%{
 mkdir -p %{buildroot}%{_sysconfdir}/adagios/conf.d/
 install %{buildroot}%{python_sitelib}/adagios/etc/adagios/adagios.conf %{buildroot}%{_sysconfdir}/adagios/
 install %{buildroot}%{python_sitelib}/adagios/etc/adagios/conf.d/okconfig.conf %{buildroot}%{_sysconfdir}/adagios/conf.d/
+install %{buildroot}%{python_sitelib}/adagios/etc/adagios/conf.d/rekishi.conf %{buildroot}%{_sysconfdir}/adagios/conf.d/
 
 mkdir -p %{buildroot}%{_sysconfdir}/sudoers.d/
 install %{buildroot}%{python_sitelib}/adagios/etc/sudoers.d/adagios %{buildroot}%{_sysconfdir}/sudoers.d/
