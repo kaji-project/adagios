@@ -90,6 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0775, shinken, shinken) %dir %{_var}/lib/adagios
 %attr(0775, shinken, shinken) %dir %{_var}/lib/adagios/userdata
 %attr(0664, shinken, shinken) %config(noreplace) %{_sysconfdir}/adagios/adagios.conf
+%attr(0664, shinken, shinken) %config(noreplace) %{_sysconfdir}/adagios/htpasswd.users
 %attr(0664, shinken, shinken) %config(noreplace) %{_sysconfdir}/adagios/conf.d/*
 %attr(0775, shinken, shinken) %dir %{_sysconfdir}/shinken/adagios
 %attr(0440, root, root) %config(noreplace) %{_sysconfdir}/sudoers.d/adagios
