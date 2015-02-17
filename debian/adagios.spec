@@ -40,7 +40,7 @@ Requires: python-django
 Adagios is a web based Nagios configuration interface build to be simple and intuitive in design, exposing less of the clutter under the hood of nagios. 
 
 %prep
-%setup -qn %{name}-%{version} -n %{name}-%{version}
+%setup -q
 VERSION=%{version}
 echo %{release} | grep -q git && VERSION=$VERSION-%{release}
 sed -i "s/^__version__.*/__version__ = '$VERSION'/" adagios/__init__.py
