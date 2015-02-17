@@ -1,3 +1,2 @@
 chown -R shinken: /etc/adagios/ /var/lib/adagios
 a2ensite adagios
-service apache2 reload || echo "Failed to reload apache. You have to reload apache to update its configuration"
