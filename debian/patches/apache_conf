@@ -1,9 +1,9 @@
-Index: adagios/adagios/apache/adagios.conf
-===================================================================
---- adagios.orig/adagios/apache/adagios.conf
-+++ adagios/adagios/apache/adagios.conf
-@@ -1,23 +1,30 @@
+--- a/adagios/apache/adagios.conf
++++ b/adagios/apache/adagios.conf
+@@ -1,23 +1,32 @@
  
++AllowEncodedSlashes NoDecode
++
  # Create the wsgi process group
 -WSGISocketPrefix run/wsgi
 -WSGIDaemonProcess adagios user=nagios group=nagios processes=1 threads=25
