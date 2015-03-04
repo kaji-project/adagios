@@ -1,3 +1,9 @@
+adagios (1.6.1-3kaji0.2) unstable; urgency=medium
+
+  * Fix get data for service name with slashes
+
+ -- Thibault Cohen <thibault.cohen@savoirfairelinux.com>  Wed, 04 Mar 2015 09:52:32 -0500
+
 adagios (1.6.1-2kaji0.2) unstable; urgency=medium
 
   * Kaji release

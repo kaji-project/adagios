@@ -8,7 +8,7 @@
 
 Name: adagios
 Version: 1.6.1
-Release: 2kaji0.2
+Release: 3kaji0.2
 Summary: Web Based Nagios Configuration
 Group: Applications/Internet
 License: AGPLv3
@@ -96,6 +96,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0440, root, root) %config(noreplace) %{_sysconfdir}/sudoers.d/adagios
 
 %changelog
+* Wed Feb 04 2015 Thibault Cohen <thibault.cohen@savoirfairelinux.com> 1.6.1-3kaji0.2
+- Fix get data for service name with slashes
+
 * Wed Aug 28 2013 Pall Sigurdsson <palli@opensource.is> 1.2.4-1
 - Fix syntax error in adagios.conf (palli@opensource.is)
 - Merge branch 'master' of github.com:opinkerfi/adagios (palli@opensource.is)
